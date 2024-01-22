@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Form: {"templateId":"Allergen_immunterapi_konsultasjon_variant.v2.0.0"
+ ,"name":"Allergen_immunterapi_konsultasjon_variant","version":"2.0.1"
+ ,"createdTimestamp":"2024-01-22T12:00:18.8244416+01:00","status":"Dra
+ ft","category":"allergen_immunterapi","creator":"silje.ljosland.bakke
+ @helse-vest-ikt.no","type":"JSON","tags":{"application":"DIPS Form De
+ signer / 4.3.2.0","modifiedTimestamp":"01/22/2024 12:00:21","modified
+ By":"silje.ljosland.bakke@helse-vest-ikt.no"},"schemaVersion":"2.3","
+ resources":[{"name":"form-layout","mimetype":"application/json","type
+ ":"source"},{"name":"form-description","mimetype":"application/json",
+ "type":"source"},{"name":"form-dependencies","mimetype":"application/
+ json","type":"source"},{"name":"form-script","mimetype":"application/
+ javascript","type":"source"}]}
+Resource-Charset: UTF-8
+Resource-Fileset: {"form-layout":"Allergen_immunterapi_konsultasjon_va
+ riant_2_0_1/form_layout.json","form-description":"Allergen_immunterap
+ i_konsultasjon_variant_2_0_1/form_description.json","form-dependencie
+ s":"Allergen_immunterapi_konsultasjon_variant_2_0_1/form_dependencies
+ .json","form-script":"Allergen_immunterapi_konsultasjon_variant_2_0_1
+ /form_script.js"}
+Create-Timestamp: 2024-01-22T12:00:21.0833067+01:00
+
