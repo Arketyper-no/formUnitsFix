@@ -20,14 +20,22 @@ Expand-Archive -Path $zipFileName -DestinationPath $tempDir -Force
 $jsonFilePath = Join-Path $tempDir "path/to/your/file.json"
 
 # Load the JSON lookup table
-$lookupTable = Get-Content -Path "path/to/your/lookupTable.json" | ConvertFrom-Json
+$lookupTable = Get-Content -Path "units.json" | ConvertFrom-Json
 
 $matchRegex = '{"suffix":"unit","type":"CODED_TEXT","list":\[{"value":"(.+)","label":"\1"'
 
 # Modify the content of the JSON file using a regex pattern and lookup table
-(Get-Content -Path $jsonFilePath) | ForEach-Object {
-    $_ -replace $matchRegex, { $lookupTable[$matches[1]] }
-} | Set-Content -Path $jsonFilePath
+$content = Get-Content -Path $jsonFilePath -Raw
+
+while ($content -match $matchRegex) {
+    $valueToReplace = $matches[1]
+    if ($lookupTable.ContainsKey($valueToReplace)) {
+        $replacement = $lookupTable[$valueToReplace]
+        $content = $content -replace $matchRegex, ('{"suffix":"unit","type":"CODED_TEXT","list":[{"value":"{0}","label":"$replacement"' -f $replacement)
+    }
+}
+
+$content | Set-Content -Path $jsonFilePath
 
 # Re-zip the modified contents
 $newZipFileName = [System.IO.Path]::ChangeExtension($zipFileName, "modified.zip")
