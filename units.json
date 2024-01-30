@@ -1,10 +1,43 @@
-{
-    "mm[Hg]": "mmHg",
-    "ug": "µg",
-    "ug/dL": "µg/dL",
-    "umol/L": "µmol/L",
-    "ug/mL": "µg/mL",
-    "Cel": "°C",
-    "[arb'U]{SQ-U}": "SQ-U",
-    "[arb'U]{SQ-U}/mL": "SQ-U/mL"
-}
+[
+    {
+      "label": "mmHg",
+      "value": "mm[Hg]"
+    },
+    {
+      "label": "µg",
+      "value": "ug"
+    },
+    {
+      "label": "µg/dL",
+      "value": "ug/dL"
+    },
+    {
+      "label": "µmol/L",
+      "value": "umol/L"
+    },
+    {
+      "label": "µg/mL",
+      "value": "ug/mL"
+    },
+    {
+      "label": "°C",
+      "value": "Cel"
+    },
+    {
+      "label": "SQ-U",
+      "value": "[arb'U]{SQ-U}"
+    },
+    {
+      "label": "SQ-U/mL",
+      "value": "[arb'U]{SQ-U}/mL"
+    },
+    {
+      "label": "SQ-U/mL",
+      "value": "[arb'U]{SQ-U}/mL"
+    },
+    {
+      "label": "kg/m²",
+      "value": "kg/m2"
+    }
+  ]
+  
