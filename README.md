@@ -1,7 +1,7 @@
 # formUnitsFix
 A command line tool for adding human readable unit symbols to form definitions.
 
-Usage: ```.\formUnitsFix.ps1 [form_filename.zip]```
+Usage: ```.\formUnitsFix.ps1 form_filename.zip [opt_filename.opt]```
 
 # Addpath
 
