@@ -45,7 +45,7 @@ if ($useOpt) {
         exit 1
     }
 
-    $optContent = Get-Content -Raw -Path $optFilePath -encoding "UTF8"
+    $optContent = Get-Content -Raw -Path $optFilePath -encoding "utf8"
 
     # Check if units were loaded successfully
     if (-not $optContent) {
@@ -79,7 +79,7 @@ if ($useOpt) {
 
 
 # Load the units file as a dictionary
-$unitsFileContent = Get-Content -Raw -Path $unitsFilePath -encoding "UTF8" | ConvertFrom-Json
+$unitsFileContent = Get-Content -Raw -Path $unitsFilePath -encoding "utf8" | ConvertFrom-Json
 
 # Check if units were loaded successfully
 if (-not $unitsFileContent) {
@@ -129,7 +129,7 @@ if (-not (Test-Path -Path $formDescriptionPath -PathType Leaf)) {
 }
 
 # Load the form description file as a string
-$formDescription = Get-Content -Raw -Path $formDescriptionPath -Encoding "UTF8"
+$formDescription = Get-Content -Raw -Path $formDescriptionPath -Encoding "utf8"
 
 # Check if the content has more than one line
 if (($formDescription -split "`n" | Measure-Object -Line).Lines -gt 1) {
@@ -204,16 +204,21 @@ if (-not $testFlag -eq "test") {
         $counter++
     }
 
-    # Move the original file to the backup file path
-    Move-Item $formZipPath $backupFilePath
+    # Copy the original file to the backup file path
+    Copy-Item $formZipPath $backupFilePath
     Write-Host "Original form file backed up as $backupFilePath"
 
-    $formDescription | Set-Content -Path $formDescriptionPath -encoding "UTF8" -NoNewline
+    # Removing old form_description.json before adding the new content
+    Remove-Item -Path $formDescriptionPath -Force
+
+    # Writing modified form_description.json
+    #Add-Content -Path $formDescriptionPath -Value $formDescription -Encoding UTF8
+    $null = New-Item -Force $formDescriptionPath -Value $formDescription
     Write-Host "Modified content written to form_descrition.json"
 
     # Re-zip the modified contents
     Write-Host "Rezipping modified form definitions"
-    Compress-Archive -Path $tempDir\* -DestinationPath $formZipPath -Force
+    Compress-Archive -Path $formDescriptionPath -Update -DestinationPath $formZipPath -Verbose
 
     # Remove the temporary directory
     Remove-Item -Path $tempDir -Recurse -Force
