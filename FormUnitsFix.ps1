@@ -208,7 +208,7 @@ if (-not $testFlag -eq "test") {
     Move-Item $formZipPath $backupFilePath
     Write-Host "Original form file backed up as $backupFilePath"
 
-    $formDescription | Set-Content -Path $formDescriptionPath -encoding "UTF8"
+    $formDescription | Set-Content -Path $formDescriptionPath -encoding "UTF8" -NoNewline
     Write-Host "Modified content written to form_descrition.json"
 
     # Re-zip the modified contents
