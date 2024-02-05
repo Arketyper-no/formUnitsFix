@@ -218,7 +218,7 @@ if (-not $testFlag -eq "test") {
 
     # Re-zip the modified contents
     Write-Host "Rezipping modified form definitions"
-    Compress-Archive -Path $formDescriptionPath -Update -DestinationPath $formZipPath -Verbose
+    Compress-Archive -Path $formDescriptionPath -Update -DestinationPath $formZipPath
 
     # Remove the temporary directory
     Remove-Item -Path $tempDir -Recurse -Force
