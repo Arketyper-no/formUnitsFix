@@ -98,19 +98,23 @@ foreach ($newUnit in $unitsFileContent) {
     }
 }
 
+$guid = [guid]::NewGuid().ToString()
+
 # Create a temporary directory to extract the contents of the zip file
-$tempDir = Join-Path $env:TEMP "TempZipFolder"
+$tempDir = Join-Path $env:TEMP $guid
 # Check if the temporary directory exists
 if ((Test-Path $tempDir)) {
     # If it exists, remove it
     Remove-Item -Path $tempDir -Recurse -Force
 }
 
+Write-Host "Temporary directory: $tempDir"
+
 # Create the new temp directory
 New-Item -ItemType Directory -Force -Path $tempDir | Out-Null
 
 # Extract the contents of the zip file
-Expand-Archive -Path $formZipPath -DestinationPath $tempDir -Force | Out-Null
+Expand-Archive -Path $formZipPath -DestinationPath $tempDir -Force
 
 # Finding the directory name in the temp folder
 # Remove the file extension
@@ -131,18 +135,18 @@ if (-not (Test-Path -Path $formDescriptionPath -PathType Leaf)) {
 # Load the form description file as a string
 $formDescription = Get-Content -Raw -Path $formDescriptionPath -Encoding "utf8"
 
-# Check if the content has more than one line
-if (($formDescription -split "`n" | Measure-Object -Line).Lines -gt 1) {
-    Write-Host "Error: The form description file must be a single-line file. Exiting."
-    exit
-}
-
 # Check if form_description was loaded successfully
 if (-not $formDescription) {
     Write-Host "Error: Failed to load $formDescriptionPath as a string."
     exit 1
 } else {
     Write-Host "Successfully loaded form_description.json"
+    # Check if the content has more than one line
+    if (($formDescription -split "`n" | Measure-Object -Line).Lines -gt 1) {
+        Write-Host "Error: The form description file must be a single-line file. Cleaning up temporary files and exiting script."
+        Remove-Item -Path $tempDir -Recurse -Force
+        exit
+    }
 }
 
 # Define the regex pattern for matching
@@ -189,7 +193,7 @@ if (-not $testFlag -eq "test") {
 
     # Check if no matches were found
     if (-not $matchesFound) {
-        Write-Host "No matches found with units.json. Cleaning up temporary files and exiting script."
+        Write-Host "No matches found with units.json and/or the OPT. Cleaning up temporary files and exiting script."
         # Remove the temporary directory
         Remove-Item -Path $tempDir -Recurse -Force
         exit
